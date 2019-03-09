@@ -1,5 +1,6 @@
 /* Ver.1.0.0
     Yuk altinda batarya gosterge
+    Ornek olarak 12 volt kursun asit aku icin degerler hesaplandi
 */
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
@@ -29,6 +30,7 @@ void setup() {
 }
 
 void loop() {
+  // bir saniye araliklarla sekiz farklı voltaj olcumu yapılıyor
   float v1 = (analogRead(0) * vPow) / 1024.0;
   delay(1000);
   float v2 = (analogRead(0) * vPow) / 1024.0;
@@ -52,6 +54,7 @@ void loop() {
   float kap6 = v6 / (r2 / (r1 + r2));
   float kap7 = v7 / (r2 / (r1 + r2));
   float kap8 = v8 / (r2 / (r1 + r2));
+  // ve bu olcumlerin en yuksek degeri gosterilir. bu demek oluyorki ekranda sekiz saniyede bir deger gosterimi yapılıyor. boylelikle daha stabil sonuc gosterimi olusturulur.
   float kapasite1 = max(kap1, kap2);
   float kapasite2 = max(kap3, kap4);
   float kapasite3 = max(kap5, kap6);
@@ -60,7 +63,7 @@ void loop() {
   float kapasite_b = max(kapasite3, kapasite4);
   float kapasite = max(kapasite_a, kapasite_b);
 
-
+  // serial monitorde takibi yapılır
   Serial.print("Olcum 1: ");
   Serial.println(kap1);
   Serial.print("Olcum 2: ");
@@ -84,8 +87,11 @@ void loop() {
   Serial.print("Max: ");
   Serial.println(kapasite);
 
-  if (kapasite < 11.02) {                      // %0 bos ilk
-    lcd.clear(); //Ekranı temizliyoruz.
+  // LCD ekranda grafik gosterimi yapilir
+  // Bataryaya bagladiginiz yuk ve uygulamaya gore %0 bos gosterge voltajini belirlemeniz gerekir. 
+  // burada olctugunuz voltaj degeri ile dijital multimetrenizde yaptıginiz olcum arasinda ufak fark olacaktir
+  if (kapasite < 11.02) {                             // %0 bos
+    lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%0");
     lcd.setCursor(12, 1);
@@ -102,7 +108,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 11.02 && kapasite < 11.22) { // %10 dolu ilk
+  else if (kapasite > 11.02 && kapasite < 11.22) {    // %10 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%10");
@@ -118,7 +124,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 11.22 && kapasite < 11.42) { // %20 dolu
+  else if (kapasite > 11.22 && kapasite < 11.42) {    // %20 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%20");
@@ -138,7 +144,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 11.42 && kapasite < 11.63) { // %30 dolu ilk
+  else if (kapasite > 11.42 && kapasite < 11.63) {    // %30 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%30");
@@ -162,7 +168,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 11.63 && kapasite < 11.83) { // %40 dolu
+  else if (kapasite > 11.63 && kapasite < 11.83) {    // %40 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%40");
@@ -190,7 +196,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 11.83 && kapasite < 12.03) { // %50 dolu ilk
+  else if (kapasite > 11.83 && kapasite < 12.03) {    // %50 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%50");
@@ -222,7 +228,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 12.03 && kapasite < 12.23) { // %60 dolu
+  else if (kapasite > 12.03 && kapasite < 12.23) {    // %60 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%60");
@@ -258,7 +264,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 12.23 && kapasite < 12.43) { // %70 dolu ilk
+  else if (kapasite > 12.23 && kapasite < 12.43) {    // %70 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%70");
@@ -298,7 +304,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 12.43 && kapasite < 12.64) { // %80 dolu
+  else if (kapasite > 12.43 && kapasite < 12.64) {    // %80 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%80");
@@ -342,7 +348,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 12.64 && kapasite < 12.84) { // %90 dolu
+  else if (kapasite > 12.64 && kapasite < 12.84) {    // %90 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%90");
@@ -390,7 +396,7 @@ void loop() {
     lcd.write(byte(4));
   }
 
-  else if (kapasite > 12.84) { // %100 dolu
+  else if (kapasite > 12.84) {                        // %100 dolu
     lcd.clear();
     lcd.setCursor(12, 0);
     lcd.print("%100");
