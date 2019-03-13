@@ -1,5 +1,5 @@
 /* Ver.1.0.0
-    Yuk altinda batarya gosterge
+    Batarya Kapasitemetre
     Ornek olarak 12 volt kursun asit aku icin degerler hesaplandi
 */
 #include <LiquidCrystal.h>
